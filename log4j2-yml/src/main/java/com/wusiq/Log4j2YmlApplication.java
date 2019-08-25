@@ -10,7 +10,7 @@ public class Log4j2YmlApplication {
 
     public static void main(String[] args) {
         recordLog();
-       // SpringApplication.run(Log4j2YmlApplication.class, args);
+     // SpringApplication.run(Log4j2YmlApplication.class, args);
     }
 
 
