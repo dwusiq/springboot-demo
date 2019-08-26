@@ -46,3 +46,23 @@
 ```
 
 
+## 三、FAQ
+#### 3.1`通用编译命令
+有时候gradle版本对不上，编译可能会失败，可以用如下命令：
+```
+chmod +x ./gradlew
+./gradlew build -x test
+```
+
+#### 3.2 高低版本gradle引用lombok问题
+低版本配置：
+```
+compile('org.projectlombok:lombok:1.18.2)
+```
+高版本配置：
+```
+  annotationProcessor 'org.projectlombok:lombok:1.18.2'
+  compileOnly 'org.projectlombok:lombok:1.18.2'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.2'
+  testCompileOnly 'org.projectlombok:lombok:1.18.2'
+```
