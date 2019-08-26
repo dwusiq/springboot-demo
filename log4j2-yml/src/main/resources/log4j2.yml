@@ -24,7 +24,8 @@ Configuration:
         onMismatch: DENY
       PatternLayout:
         pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%5p %t  %l   - %m%n"
-    RollingFile: # 输出到文件，超过128MB归档
+
+    RollingFile: # 输出到文件
       - name: ROLLING_FILE
         ignoreExceptions: false
         fileName: ${log.path}/${project.name}.log
@@ -32,20 +33,25 @@ Configuration:
         PatternLayout:
           pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%5p %t  (%F:%M:%L)   - %m%n"
         Policies:
-          SizeBasedTriggeringPolicy:
+          TimeBasedTriggeringPolicy:  # 按天分类
+            modulate: true
+            interval: 1
+          SizeBasedTriggeringPolicy: # 超过128MB归档
             size: "128 MB"
-        DefaultRolloverStrategy:
+        DefaultRolloverStrategy: # 文件最多1000个
           max: 1000
 
   Loggers:
-    Root:
+    Root: # 同步打印
       level: info
+      includeLocation: true
       AppenderRef:
         - ref: CONSOLE
         - ref: ROLLING_FILE
-    Logger: # 为com.wusiq包配置特殊的Log级别，方便调试
+    AsyncLogger: # 为com.wusiq包配置特殊的Log级别，  异步打印
       - name: com.wusiq
         additivity: false
+        includeLocation: true
         level: ${sys:log.level.wusiq}
         AppenderRef:
           - ref: CONSOLE
